@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('companies', function (Blueprint $table) {
+        Schema::create('candidates', function (Blueprint $table) {
     $table->id();
     $table->string('name');
-    $table->string('email')->nullable();
+    $table->string('email')->unique();
     $table->string('phone')->nullable();
-    $table->foreignId('tenant_id')->nullable()->constrained('tenants')->onDelete('set null');
+    $table->integer('experience')->default(0);
+    $table->text('skills')->nullable();
+    $table->string('cv_path')->nullable(); // CV file path
     $table->timestamps();
 });
-
     }
 
     /**
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('candidates');
     }
 };

@@ -9,7 +9,15 @@ class RoleSeeder extends Seeder
 {
     public function run(): void
     {
-        Role::create(['name' => 'admin']);
-        Role::create(['name' => 'recruiter']);
+
+        Role::firstOrCreate([
+            'name' => 'admin',
+            'guard_name' => 'web',
+        ]);
+
+        Role::firstOrCreate([
+            'name' => 'recruiter',
+            'guard_name' => 'web',
+        ]);
     }
 }

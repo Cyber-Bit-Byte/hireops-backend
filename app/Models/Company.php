@@ -11,11 +11,16 @@ class Company extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'email',
-        'phone',
-        'email_notifications'
-    ];
+    'name',
+    'email',
+    'phone',
+    'tenant_id',
+];
+
+public function tenant()
+{
+    return $this->belongsTo(Tenant::class);
+}
 
     // One company has many users
     public function users()

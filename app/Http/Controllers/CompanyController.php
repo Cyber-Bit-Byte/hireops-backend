@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-
+use App\Http\Controllers\Controller;
 use App\Models\Company;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
-    // Admin only
     public function store(Request $request)
     {
         $request->validate([
@@ -29,7 +28,6 @@ class CompanyController extends Controller
         ], 201);
     }
 
-    // Admin only – list companies (optional but useful)
     public function index()
     {
         return response()->json(Company::latest()->get());
