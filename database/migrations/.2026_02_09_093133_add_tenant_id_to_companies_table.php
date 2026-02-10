@@ -12,9 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('companies', function (Blueprint $table) {
-             $table->unsignedBigInteger('tenant_id')->nullable();
+            $table->foreignId('tenant_id')
+              ->nullable()
+              ->constrained('tenants')
+              ->onDelete('set null');
         });
     }
+
+    
 
     /**
      * Reverse the migrations.

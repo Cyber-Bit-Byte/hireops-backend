@@ -13,10 +13,13 @@ return new class extends Migration
     {
        Schema::create('companies', function (Blueprint $table) {
     $table->id();
-    $table->string('name');
+    $table->string('name');               // ← এটা থাকতে হবে
     $table->string('email')->nullable();
     $table->string('phone')->nullable();
-    $table->foreignId('tenant_id')->nullable()->constrained('tenants')->onDelete('set null');
+    $table->foreignId('tenant_id')
+          ->nullable()
+          ->constrained('tenants')
+          ->onDelete('set null');
     $table->timestamps();
 });
 

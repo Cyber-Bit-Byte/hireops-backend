@@ -3,17 +3,16 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Api\CompanyController;
-use App\Http\Controllers\Api\CvController;
+use App\Http\Controllers\Api\CompanyController; // এটা অবশ্যই রাখো
 
-// Public login route (custom, session-free)
+// Public login route
 Route::post('/login', function (Request $request) {
     $request->validate([
         'email' => 'required|email',
         'password' => 'required',
     ]);
 
-    if (! Auth::attempt($request->only('email', 'password'))) {
+    if (!Auth::attempt($request->only('email', 'password'))) {
         return response()->json([
             'message' => 'The provided credentials are incorrect.'
         ], 401);
@@ -33,9 +32,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Admin only routes (Spatie role middleware)
+// Logout
+Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
+    $request->user()->currentAccessToken()->delete();
+    return response()->json(['message' => 'Logged out successfully']);
+});
+
+// Admin only routes
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::apiResource('companies', CompanyController::class);
 });
-
-
