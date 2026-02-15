@@ -3,7 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Api\CompanyController; // এটা অবশ্যই রাখো
+use App\Http\Controllers\Api\CompanyController;
+use App\Http\Controllers\API\EmployeeController;
 
 // Public login route
 Route::post('/login', function (Request $request) {
@@ -39,6 +40,21 @@ Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
 });
 
 // Admin only routes
+// Admin only routes (Spatie role middleware)
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+    // Company CRUD (apiResource )
     Route::apiResource('companies', CompanyController::class);
+
+    // Company-specific Employees (nested routes)
+    Route::prefix('companies/{company}')->group(function () {
+        // Employee list for a specific company
+        Route::get('/employees', [EmployeeController::class, 'index']);
+
+        // Create new employee under a company
+        Route::post('/employees', [EmployeeController::class, 'store']);
+    });
+
+    // Global employee routes (update & delete - ID )
+    Route::put('/employees/{employee}', [EmployeeController::class, 'update']);
+    Route::delete('/employees/{employee}', [EmployeeController::class, 'destroy']);
 });
