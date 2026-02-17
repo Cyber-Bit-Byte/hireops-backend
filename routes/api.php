@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\API\EmployeeController;
+use App\Http\Controllers\API\AttendanceController;
+
 
 // Public login route
 Route::post('/login', function (Request $request) {
@@ -58,3 +60,4 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::put('/employees/{employee}', [EmployeeController::class, 'update']);
     Route::delete('/employees/{employee}', [EmployeeController::class, 'destroy']);
 });
+Route::apiResource('attendances', AttendanceController::class);
