@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\API\EmployeeController;
 use App\Http\Controllers\API\AttendanceController;
+use App\Http\Controllers\Api\SalaryController;
+
 
 
 // Public login route
@@ -61,3 +63,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::delete('/employees/{employee}', [EmployeeController::class, 'destroy']);
 });
 Route::apiResource('attendances', AttendanceController::class);
+
+Route::apiResource('salaries', SalaryController::class);
+
+Route::get('employees/{id}/salaries', [SalaryController::class, 'employeeSalary']);

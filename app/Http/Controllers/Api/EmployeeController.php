@@ -81,4 +81,5 @@ class EmployeeController extends Controller
 
         return response()->json(['message' => 'Employee deleted successfully']);
     }
+
 }
