@@ -8,6 +8,7 @@ use App\Http\Controllers\API\EmployeeController;
 use App\Http\Controllers\API\AttendanceController;
 use App\Http\Controllers\Api\SalaryController;
 use App\Http\Controllers\Api\CompanyCostController;
+use App\Http\Controllers\Api\TaskController;
 
 
 
@@ -70,3 +71,5 @@ Route::apiResource('salaries', SalaryController::class);
 Route::get('employees/{id}/salaries', [SalaryController::class, 'employeeSalary']);
 Route::apiResource('company-costs', CompanyCostController::class);
 Route::get('/company/{company_id}/costs', [CompanyCostController::class, 'companyCosts']);
+
+Route::apiResource('tasks', TaskController::class);
