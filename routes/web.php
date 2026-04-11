@@ -7,12 +7,13 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\TaskController;
 
 Route::get('/', function () {
-    return view('welcome'); // home page
+    return view('welcome');
 });
 
-Route::prefix('admin')->group(function () {
+// ✅ FIX HERE
+Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('companies', CompanyController::class);
     Route::resource('employees', EmployeeController::class);
