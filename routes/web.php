@@ -10,7 +10,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// ✅ FIX HERE
+// Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -18,5 +18,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('companies', CompanyController::class);
     Route::resource('employees', EmployeeController::class);
     Route::resource('tasks', TaskController::class);
+
+    // Super Admin Route - সরাসরি Middleware Class ব্যবহার করছি
+    Route::middleware(\App\Http\Middleware\SuperAdminMiddleware::class)->group(function () {
+
+        Route::get('/super-admin/dashboard', function () {
+            return view('admin.superadmin.dashboard');
+        })->name('superadmin.dashboard');
+
+    });
 
 });
